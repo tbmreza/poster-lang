@@ -1,3 +1,53 @@
+Pseudocode programming language.
+Pseudocode expression tool. Algorithms-book-styled presentation as a general programming language.
+
+Features:
+- Time travel debugging: Record, replay, and full VM state examination at any point.
+- Complexity aware: Optionally summarizes an algorithm's complexity.
+
+Supporting projects:
+- Literate programming, visual rendering, font ligatures
+- Unit testing, golden tests
+- Package manager loper
+- LSP, MCP
+
+```
+StringCopy(s, n)
+for i := 1 to n
+	t[i] := s[i]
+return t
+
+output StringCopy("Poster", 255)
+```
+
+
+valueOfCoins := Sigma until d from k=1, (i index k) * (c index k)
+
+sigma(d, k=1) ik ck
+
+S d
+S      i   c
+S k=1   k   k
+
+
+AllLeaves(L, k)
+a := (1, ..., 1)
+while forever
+    output a
+    a := Next(a, L, k)
+    if a = (1, 1, ..., 1)
+        done
+
+AllLeaves/2 line 6
+
+output AllLeaves([], 0)
+
+AllLeaves([], 0) for example is []
+  (*  "concrete interpreter"
+  CPS/cps.sml requires grammar/parser.sml for parsePath : Path -> ast
+  CPS/cps.sml provides                        ioInterp : value -> IO ()
+  cli.sml requires ioInterp, for example `ioInterp (cps "#output 12")`
+*)
 # poster-lang
 
 - [ ] Define the message format for StepResult or StateSnapshot.
@@ -21,6 +71,10 @@ but we don't want loc time-travel. let's learn cps conversion first.
 
 for our time-travel support purposes, we'll start with list-based Env instead of hashmaps. we'll
 explore hybrid implementation in time.
+
+at the beginning of the execution, env is minimal, the continuation is the whole program.
+when the execution halts, env normally has grown larger, the continuation is identity function.
+stepping back means popping [history], stepping forward means proceeding cps to expr
 
 ## See also
 - https://visualgo.net/en
@@ -172,8 +226,6 @@ cargo r --example client  # ...fire request from example client
 cargo r --example dl
 ```
 
-?? cargo workspace
-https://github.com/tokio-rs/axum/blob/main/Cargo.toml
 
 // example/client.rs
 use ts_proto::zer_client::ZerClient;
