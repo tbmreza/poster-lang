@@ -85,7 +85,7 @@ in
 end
 
 (* Evaluate AST to a value via CPS rules. Save env on every interesting
-   reductions (i.e. cps invocations in rhs' that extends env, ??: branches that we take, ).
+   reductions (i.e. cps invocations in rhs' that extends env, branches that we take, ).
 
     cps :     expr    -> value  *)
 fun cps (LInt v, _, k) = k (INT v)
@@ -123,9 +123,9 @@ fun cps (LInt v, _, k) = k (INT v)
       cps (exp, env', k) end)
 
   | cps (LApp (LPrim prim, exp), env, k) =
-    cps (exp, env, fn v => k (case prim of
-      OpOutput => doOutput v
-    | OpReadFile => doReadFile v))
+    cps (exp, env, fn exp' => k (case prim of
+      OpOutput => doOutput exp'
+    | OpReadFile => doReadFile exp'))
 
   | cps (LApp (f, arg), env, k) =
     cps (f, env, fn f' =>
@@ -134,10 +134,12 @@ fun cps (LInt v, _, k) = k (INT v)
 
 
   | cps (LIf (LBool true, exp, _), env, k) =
-    cps (exp, env, fn exp' => k exp')
+    (* cps (exp, env,             fn exp' => k exp') *)
+    cps (exp, env, snap! exp env (fn exp' => k exp'))
 
   | cps (LIf (LBool false, _, exp), env, k) =
-    cps (exp, env, fn exp' => k exp')
+    (* cps (exp, env, fn exp' => k exp') *)
+    cps (exp, env, snap! exp env (fn exp' => k exp'))
 
   | cps (LIf (b, thn, els), env, k) =
     cps (b, env, fn b' =>
@@ -184,10 +186,29 @@ fun cps (LInt v, _, k) = k (INT v)
     cps (a, env, fn a' =>
       cps (b, env, fn b' => cps (LGt (node a', node b'), env, k)))
 
-  (* | cps (LFor_ (loopVar, LInt lo, LInt hi, body), env, k) = *)
-  (* ??: Wrap body with a lambda for let-form desugaring. *)
+  (* ??: read up on parallel cps data/control flow. *)
 
-    (* | cps (LFor_ (loopVar, lo, hi, body), env, k) = *)
+  (* First extend env with (loopVar, lo). *)
+  (* Contextualize body with new env. *)
+  | cps (LFor (loopVar, LInt lo, LInt hi, LDef ("_", payload)), env, k) =
+    let
+      val env' = extend loopVar (INT lo) env
+    in
+      case lo = hi of
+        true => k UNIT
+      | _ =>
+        cps (payload, env', fn _ =>
+          cps (LFor (loopVar, LInt (lo + 1), LInt hi, LDef ("_", payload)), env', k))
+    end
+
+  | cps (LFor (loopVar, LInt lo, LInt hi, body), env, k) =
+    cps (LFor (loopVar, LInt lo, LInt hi, LDef ("_", body)), env, k)
+
+  | cps (LFor (loopVar, lo, hi, body), env, k) =
+    cps (lo, env, fn lo' => k (case OpOutput of
+      OpOutput => doOutput (STRING "yea dis")
+    | OpReadFile => doOutput (STRING "yea")))
+
 
   (* | cps (todo, _, _) = (print("todo"); raise unimplemented) *)
 
@@ -202,9 +223,5 @@ fun script(ast) = let
     (cps (ast, builtins, snap! ast builtins (fn v => v)))
 
 in () end;
-
-fun apply (LFn (CLO (farg, body, _)), arg) = LApp (LDef (farg, body), arg)
-  | apply (f, arg) = LApp (f, arg)
-
 
 end

@@ -31,6 +31,13 @@ apply (LVar "#output", LStr "\tsnd"),
 apply (LVar "#output", LStr "\tthd")))
 );
 
+
+script(
+  LFor ("i", LInt 0, LInt 3, apply (LVar "#output", LStr "0\n"))
+
+  (* print "0\n1\n2\n" *)
+)
+
 (* ??
 
 a := 11
