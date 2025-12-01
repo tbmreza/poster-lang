@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAssembly: A Compiler Infrastructure Ecosystem</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>WebAssembly</h1>
+            <p class="subtitle">The Ecosystem as a Compiler Infrastructure</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Introduction</h2>
+            <p>
+                WebAssembly (Wasm) has evolved far beyond its initial conception as a way to run high-performance code in web browsers.
+                Today, it represents a pivotal shift in how we think about compilation, portability, and safe execution of code across diverse environments.
+                This page explores the WebAssembly ecosystem not just as a runtime target, but as a comprehensive compiler infrastructure that facilitates
+                a new era of software development.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2>The Universal Compilation Target</h2>
+            <p>
+                At its core, WebAssembly provides a binary instruction format for a stack-based virtual machine.
+                This design allows it to serve as a portable compilation target for high-level languages like C, C++, Rust, and many others.
+                Unlike previous attempts at universal bytecode, Wasm was designed from the ground up to be efficient, safe, and part of the open web platform.
+            </p>
+            <p>
+                Compilers like LLVM have embraced Wasm, treating it as a first-class citizen. This integration means that the vast ecosystem of tools
+                built around LLVM can natively output WebAssembly. For developers, this translates to the ability to bring existing codebases—spanning
+                graphics engines, physics libraries, and data processing tools—to the web and beyond without rewriting a single line of logic.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2>Compiler Infrastructure in the Browser</h2>
+            <p>
+                One of the most fascinating aspects of the Wasm ecosystem is its ability to run compilers <em>within</em> the browser itself.
+                Projects like Emscripten and the Rust compiler have been compiled to Wasm, allowing for client-side compilation pipelines.
+                This capability unlocks powerful use cases, such as online IDEs (like StackBlitz or Replit) that can build and run code entirely on the user's device,
+                eliminating the latency and cost of server-side compilation.
+            </p>
+            <p>
+                Furthermore, tools like `wasm-pack` and `bindgen` bridge the gap between Wasm modules and JavaScript, automatically generating the glue code
+                necessary for seamless interoperability. This tooling ecosystem transforms Wasm from a raw binary format into a practical, accessible infrastructure
+                for modern web development.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2>Beyond the Browser: WASI and the Edge</h2>
+            <p>
+                The WebAssembly System Interface (WASI) extends the Wasm ecosystem to non-web environments. By defining a standard interface for system calls,
+                WASI allows Wasm modules to run on servers, edge devices, and IoT platforms in a secure and sandboxed manner.
+                This effectively turns Wasm into a "write once, run anywhere" solution that actually delivers on the promise, providing a lightweight,
+                secure containerization alternative to Docker for certain workloads.
+            </p>
+            <p>
+                The "compiler infrastructure" aspect shines here again, as runtimes like Wasmtime and Wasmer provide Just-In-Time (JIT) and Ahead-Of-Time (AOT)
+                compilation strategies, optimizing Wasm execution for specific hardware targets on the fly.
+            </p>
+        </section>
+
+        <section class="references">
+            <h2>Reference Sources</h2>
+            <ul class="ref-list">
+                <li>
+                    <a href="https://webassembly.org/" target="_blank">WebAssembly Official Website</a>
+                    <span class="ref-desc"> - The official home of the WebAssembly standard.</span>
+                </li>
+                <li>
+                    <a href="https://developer.mozilla.org/en-US/docs/WebAssembly" target="_blank">MDN Web Docs: WebAssembly</a>
+                    <span class="ref-desc"> - Comprehensive documentation and guides from Mozilla.</span>
+                </li>
+                <li>
+                    <a href="https://emscripten.org/" target="_blank">Emscripten</a>
+                    <span class="ref-desc"> - A complete compiler toolchain to WebAssembly, using LLVM.</span>
+                </li>
+                <li>
+                    <a href="https://wasi.dev/" target="_blank">WASI</a>
+                    <span class="ref-desc"> - The WebAssembly System Interface project.</span>
+                </li>
+                <li>
+                    <a href="https://llvm.org/" target="_blank">LLVM Compiler Infrastructure</a>
+                    <span class="ref-desc"> - The underlying compiler framework that powers much of the Wasm ecosystem.</span>
+                </li>
+                 <li>
+                    <a href="https://hacks.mozilla.org/category/webassembly/" target="_blank">Mozilla Hacks - WebAssembly</a>
+                    <span class="ref-desc"> - Deep dive articles on Wasm development and features.</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WebAssembly Ecosystem Guide. Built with &hearts; for the Open Web.</p>
+        </div>
+    </footer>
+</body>
+</html>
